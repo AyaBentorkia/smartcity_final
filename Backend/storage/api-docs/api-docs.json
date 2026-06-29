@@ -1,0 +1,2876 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Gestion des Incidents",
+        "description": "API complète pour la gestion des incidents municipaux",
+        "contact": {
+            "name": "Support API",
+            "email": "support@incidents.local"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api",
+            "description": "Serveur local"
+        },
+        {
+            "url": "/api"
+        }
+    ],
+    "paths": {
+        "/admin/assignments": {
+            "get": {
+                "tags": [
+                    "Assignments"
+                ],
+                "summary": "Lister tous les assignments",
+                "description": "Lister tous les assignments (super admin)",
+                "operationId": "5af3dac108eedfab5a74fa6c3c423999",
+                "responses": {
+                    "200": {
+                        "description": "Liste des assignments"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/admin_manager/assignment/{assignment_id}": {
+            "get": {
+                "tags": [
+                    "Assignments"
+                ],
+                "summary": "Voir un assignment spécifique",
+                "description": "Afficher un assignment spécifique",
+                "operationId": "c89fc03282c05557905bf42cc3f75194",
+                "parameters": [
+                    {
+                        "name": "assignment_id",
+                        "in": "path",
+                        "description": "ID de l'assignment",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Détails de l'assignment"
+                    },
+                    "404": {
+                        "description": "Assignment non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Assignments"
+                ],
+                "summary": "Supprimer un assignment",
+                "description": "Supprimer un assignment (admin municipal)",
+                "operationId": "43ccda5c0f1b57ffe2c071230f025264",
+                "parameters": [
+                    {
+                        "name": "assignment_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Assignment supprimé avec succès"
+                    },
+                    "400": {
+                        "description": "Impossible de supprimer un assignment clôturé"
+                    },
+                    "403": {
+                        "description": "Non autorisé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/agent/my-assignments": {
+            "get": {
+                "tags": [
+                    "Assignments"
+                ],
+                "summary": "Récupérer mes assignments (Agent)",
+                "description": "Récupérer mes assignments (agent connecté)",
+                "operationId": "c29b33f8948f79494498ffb9ca8f1a65",
+                "responses": {
+                    "200": {
+                        "description": "Liste des assignments de l'agent"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/admin_manager/my-assignments": {
+            "get": {
+                "tags": [
+                    "Assignments"
+                ],
+                "summary": "Récupérer mes assignments (Admin Municipal)",
+                "description": "Récupérer mes assignments créés (admin municipal connecté)",
+                "operationId": "e5def0be555a08f895395780e993ecfb",
+                "responses": {
+                    "200": {
+                        "description": "Liste des assignments créés par l'admin"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/admin_manager/incidents/{incident}/assign": {
+            "post": {
+                "tags": [
+                    "Assignments"
+                ],
+                "summary": "Assigner un incident à un agent",
+                "description": "Assigner un incident à un agent (admin municipal)",
+                "operationId": "fbe73e2faff662dce16981c96bc9985f",
+                "parameters": [
+                    {
+                        "name": "incident",
+                        "in": "path",
+                        "description": "ID de l'incident",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "agent"
+                                ],
+                                "properties": {
+                                    "agent": {
+                                        "description": "ID de l'agent",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Assignment créé avec succès"
+                    },
+                    "404": {
+                        "description": "Agent ou incident non trouvé"
+                    },
+                    "422": {
+                        "description": "Erreur de validation"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/admin_manager/assignments/{assignment_id}": {
+            "put": {
+                "tags": [
+                    "Assignments"
+                ],
+                "summary": "Mettre à jour un assignment (réassigner à un autre agent)",
+                "description": "Réassigner un assignment à un autre agent (admin municipal)",
+                "operationId": "50ee22f200dd77b7a1cdc5a685af622d",
+                "parameters": [
+                    {
+                        "name": "assignment_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "agent"
+                                ],
+                                "properties": {
+                                    "agent": {
+                                        "description": "ID du nouvel agent",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Assignment mis à jour avec succès"
+                    },
+                    "403": {
+                        "description": "Non autorisé"
+                    },
+                    "404": {
+                        "description": "Agent non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/agent/assignments/{assignment_id}": {
+            "patch": {
+                "tags": [
+                    "Assignments"
+                ],
+                "summary": "Clôturer un assignment (Agent)",
+                "description": "Clôturer un assignment (agent)",
+                "operationId": "ac6bcb2c9e065bd39e15310ef718c150",
+                "parameters": [
+                    {
+                        "name": "assignment_id",
+                        "in": "path",
+                        "description": "ID de l'assignment",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Assignment clôturé avec succès"
+                    },
+                    "400": {
+                        "description": "Assignment déjà clôturé"
+                    },
+                    "403": {
+                        "description": "Non autorisé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Inscription d'un nouvel utilisateur",
+                "description": "Inscription d'un nouvel utilisateur",
+                "operationId": "6703d7156c265a1e7b47e500d2a16304",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "role",
+                                    "phone",
+                                    "city",
+                                    "cin",
+                                    "birthdate"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Jean Dupont"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "jean@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "example": "citizen",
+                                        "enum": [
+                                            "citizen",
+                                            "agent",
+                                            "admin_municipal",
+                                            "super admin"
+                                        ]
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "512345678"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "Sousse"
+                                    },
+                                    "cin": {
+                                        "type": "string",
+                                        "example": "12222222"
+                                    },
+                                    "birthdate": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1990-01-15"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Utilisateur créé avec succès"
+                    },
+                    "422": {
+                        "description": "Erreur de validation"
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Connexion utilisateur",
+                "description": "Connexion utilisateur",
+                "operationId": "a5385ffca73f113abef00ea604d1ca58",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "admin@test.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "secret123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Token retourné avec succès"
+                    },
+                    "401": {
+                        "description": "Identifiants invalides"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Déconnexion",
+                "description": "Déconnexion",
+                "operationId": "cc14526f9abd470d63047b1c05aef0c3",
+                "responses": {
+                    "200": {
+                        "description": "Déconnexion réussie"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/me": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Récupérer mon profil",
+                "description": "Récupérer mon profil",
+                "operationId": "7f99448397f99ea34ee8b73f2b2375c5",
+                "responses": {
+                    "200": {
+                        "description": "Profil utilisateur"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Mettre à jour mon profil",
+                "description": "Mettre à jour mon profil",
+                "operationId": "833899002df31e564cab02fba6b76503",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Profil mis à jour"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/refresh": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Rafraîchir le token",
+                "description": "Rafraîchir le token",
+                "operationId": "a72da2119ea7c056379edd5daed539c5",
+                "responses": {
+                    "200": {
+                        "description": "Nouveau token généré"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Lister toutes les catégories",
+                "description": "Lister toutes les catégories",
+                "operationId": "ead5fb1cf2a7453acb2e37928a1b1eaf",
+                "responses": {
+                    "200": {
+                        "description": "Liste des catégories"
+                    }
+                }
+            }
+        },
+        "/categories/{category}": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Voir une catégorie spécifique",
+                "description": "Afficher une catégorie spécifique",
+                "operationId": "1d1c5342ee2901551673abd31b49dc85",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "description": "ID de la catégorie",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Détails de la catégorie"
+                    },
+                    "404": {
+                        "description": "Catégorie non trouvée"
+                    }
+                }
+            }
+        },
+        "/admin/categories": {
+            "post": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Créer une catégorie",
+                "description": "Créer une catégorie (super admin)",
+                "operationId": "fd033ad238d9b6ffbb7a3552dfea158b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Collecte des déchets"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "color": {
+                                        "type": "string",
+                                        "example": "#FF5733",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Catégorie créée avec succès"
+                    },
+                    "422": {
+                        "description": "Erreur de validation"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/admin/categories/{category}": {
+            "put": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Mettre à jour une catégorie",
+                "description": "Mettre à jour une catégorie (super admin)",
+                "operationId": "9caf76a2756678a2848b6aaf0b9233d8",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "color": {
+                                        "type": "string",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Catégorie mise à jour avec succès"
+                    },
+                    "422": {
+                        "description": "Erreur de validation"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Supprimer une catégorie",
+                "description": "Supprimer une catégorie (super admin)",
+                "operationId": "f2b4cea25a0cf8a432d7f28162eae6c5",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Catégorie supprimée avec succès"
+                    },
+                    "404": {
+                        "description": "Catégorie non trouvée"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/incidents/{incident_id}/comments": {
+            "get": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Lister les commentaires d'un incident",
+                "operationId": "b088c93a169f1b29e5cd5cccfb5476ea",
+                "parameters": [
+                    {
+                        "name": "incident_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Liste des commentaires"
+                    },
+                    "404": {
+                        "description": "Incident non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Créer un commentaire",
+                "operationId": "da91d5f01dcdde15de6eae0126e11e8c",
+                "parameters": [
+                    {
+                        "name": "incident_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "content"
+                                ],
+                                "properties": {
+                                    "content": {
+                                        "type": "string",
+                                        "example": "Cet incident doit être résolu rapidement"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Commentaire créé"
+                    },
+                    "404": {
+                        "description": "Incident non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/comments/{id}": {
+            "put": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Mettre à jour un commentaire",
+                "operationId": "e6903ffe88ec53d1900c913ecab39ab0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "content"
+                                ],
+                                "properties": {
+                                    "content": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Commentaire mis à jour"
+                    },
+                    "403": {
+                        "description": "Non autorisé"
+                    },
+                    "404": {
+                        "description": "Commentaire non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Supprimer un commentaire",
+                "operationId": "08965db07afd6799973a7023fc640b33",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Commentaire supprimé"
+                    },
+                    "403": {
+                        "description": "Non autorisé"
+                    },
+                    "404": {
+                        "description": "Commentaire non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/incidents": {
+            "get": {
+                "tags": [
+                    "Incidents"
+                ],
+                "summary": "Lister tous les incidents",
+                "description": "Lister tous les incidents",
+                "operationId": "f317f1e5d0e00b1919d90015bf8f85b4",
+                "responses": {
+                    "200": {
+                        "description": "Liste de tous les incidents"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/incidents/{id}": {
+            "get": {
+                "tags": [
+                    "Incidents"
+                ],
+                "summary": "Voir un incident spécifique",
+                "description": "Afficher un incident spécifique",
+                "operationId": "a874a4f9f6eaa8db381a9d07aa419350",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Détails de l'incident"
+                    },
+                    "404": {
+                        "description": "Incident non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Incidents"
+                ],
+                "summary": "Supprimer un incident",
+                "description": "Supprimer un incident",
+                "operationId": "ba05f60ef16f564930756af8da4f365f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Incident supprimé avec succès"
+                    },
+                    "404": {
+                        "description": "Incident non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/citizen/incidents/{category_id}": {
+            "post": {
+                "tags": [
+                    "Incidents"
+                ],
+                "summary": "Créer un incident (Citizen)",
+                "description": "Créer un incident (citoyen) — sans détection de zone",
+                "operationId": "64f7a43e1e502191c06eeea1403dcc23",
+                "parameters": [
+                    {
+                        "name": "category_id",
+                        "in": "path",
+                        "description": "ID de la catégorie",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "description",
+                                    "latitude",
+                                    "longitude"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Nid de poule"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Grand nid de poule dangereux"
+                                    },
+                                    "latitude": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 33.5731
+                                    },
+                                    "longitude": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": -7.5898
+                                    },
+                                    "address_text": {
+                                        "type": "string",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Incident créé avec succès"
+                    },
+                    "422": {
+                        "description": "Coordonnées GPS requises"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/citizen/incidents/{category_id}/zone": {
+            "post": {
+                "tags": [
+                    "Incidents"
+                ],
+                "summary": "Créer un incident avec détection de zone automatique (Citizen)",
+                "description": "Créer un incident avec détection automatique de zone (GPS)",
+                "operationId": "13a348c495f8efafff87321bffdb7d9e",
+                "parameters": [
+                    {
+                        "name": "category_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "description",
+                                    "latitude",
+                                    "longitude"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Nid de poule"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Grand nid de poule dangereux"
+                                    },
+                                    "latitude": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 33.5731
+                                    },
+                                    "longitude": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": -7.5898
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Incident créé avec zone détectée"
+                    },
+                    "422": {
+                        "description": "Coordonnées GPS invalides ou zone introuvable"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/citizen/incidents/{id}": {
+            "put": {
+                "tags": [
+                    "Incidents"
+                ],
+                "summary": "Mettre à jour un incident (Citizen)",
+                "description": "Mettre à jour un incident (citoyen)",
+                "operationId": "39b7cf16af5991ee129ece3a2b18f9a8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Incident mis à jour"
+                    },
+                    "400": {
+                        "description": "Statut invalide pour modification"
+                    },
+                    "403": {
+                        "description": "Non autorisé"
+                    },
+                    "404": {
+                        "description": "Incident non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/admin_manager/incidents/nearby": {
+            "get": {
+                "tags": [
+                    "Incidents"
+                ],
+                "summary": "Lister les incidents proches de ma municipalité",
+                "description": "Récupérer les incidents proches de ma municipalité (admin municipal)",
+                "operationId": "10523769fed1e4a2a12cc6febb85b171",
+                "responses": {
+                    "200": {
+                        "description": "Liste des incidents proches"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/incidents/zone/{zoneId}": {
+            "get": {
+                "tags": [
+                    "Incidents"
+                ],
+                "summary": "Récupérer les incidents par zone",
+                "description": "Récupérer les incidents par zone",
+                "operationId": "5c10717d84a40372bc360b233720ed85",
+                "parameters": [
+                    {
+                        "name": "zoneId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Liste des incidents de la zone"
+                    },
+                    "404": {
+                        "description": "Zone non trouvée"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/incidents/citizen/{citizenId}": {
+            "get": {
+                "tags": [
+                    "Incidents"
+                ],
+                "summary": "Récupérer les incidents d'un citoyen",
+                "description": "Récupérer les incidents d'un citoyen spécifique (par admin)",
+                "operationId": "afd8097b1e3dd7928d07bf891a1b29db",
+                "parameters": [
+                    {
+                        "name": "citizenId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Liste des incidents du citoyen"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/citizen/my-incidents": {
+            "get": {
+                "tags": [
+                    "Incidents"
+                ],
+                "summary": "Mes incidents (Citizen)",
+                "description": "Récupérer mes propres incidents (citoyen connecté)",
+                "operationId": "df0189a397e6b5dbfe848bbefba2cf09",
+                "responses": {
+                    "200": {
+                        "description": "Liste de mes incidents"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/admin_manager/incidents/{id}/status": {
+            "patch": {
+                "tags": [
+                    "Incidents"
+                ],
+                "summary": "Mettre à jour le statut d'un incident",
+                "description": "Mettre à jour le statut d'un incident (admin municipal)",
+                "operationId": "821876c517e28a28c68b4dbb476f9dd8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "status"
+                                ],
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "signalé",
+                                            "en cours",
+                                            "résolu"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Statut mis à jour"
+                    },
+                    "404": {
+                        "description": "Incident non trouvé"
+                    },
+                    "422": {
+                        "description": "Erreur de validation"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/media/{media}": {
+            "get": {
+                "tags": [
+                    "Media"
+                ],
+                "summary": "Afficher un média",
+                "description": "Afficher un média spécifique",
+                "operationId": "6138c048920e79a5cb457156ba570be6",
+                "parameters": [
+                    {
+                        "name": "media",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Détails du média"
+                    },
+                    "404": {
+                        "description": "Média non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/media/upload-image": {
+            "post": {
+                "tags": [
+                    "Media"
+                ],
+                "summary": "Uploader une image",
+                "description": "Uploader une image d'incident sur Cloudinary",
+                "operationId": "1409f711ae2944234f9c5432e2975ca8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "photo"
+                                ],
+                                "properties": {
+                                    "photo": {
+                                        "description": "Fichier image",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Photo uploadée avec succès"
+                    },
+                    "422": {
+                        "description": "Erreur de validation"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/media/delete-image/{publicId}": {
+            "delete": {
+                "tags": [
+                    "Media"
+                ],
+                "summary": "Supprimer une image Cloudinary",
+                "description": "Supprimer une image de Cloudinary",
+                "operationId": "64fec9e96845d25ac590ae63d6324982",
+                "parameters": [
+                    {
+                        "name": "publicId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Image supprimée"
+                    },
+                    "500": {
+                        "description": "Erreur lors de la suppression"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/users/upload-profile-photo": {
+            "post": {
+                "tags": [
+                    "Media"
+                ],
+                "summary": "Uploader une photo de profil",
+                "description": "Uploader la photo de profil de l'utilisateur connecté",
+                "operationId": "4084c57bbbdf3382dc18efb46e0cdbfb",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "avatar"
+                                ],
+                                "properties": {
+                                    "avatar": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Photo de profil uploadée"
+                    },
+                    "422": {
+                        "description": "Erreur de validation"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/conversations": {
+            "get": {
+                "tags": [
+                    "Messaging"
+                ],
+                "summary": "Mes conversations",
+                "operationId": "c6e2de76967e6131ee742d053dec11a7",
+                "responses": {
+                    "200": {
+                        "description": "Liste des conversations"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Messaging"
+                ],
+                "summary": "Démarrer une conversation (Citizen)",
+                "operationId": "58fb50267e9f85b4ed687e3182f6d7ab",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "admin_id",
+                                    "message"
+                                ],
+                                "properties": {
+                                    "admin_id": {
+                                        "description": "ID du responsable municipal",
+                                        "type": "integer"
+                                    },
+                                    "message": {
+                                        "type": "string",
+                                        "example": "Bonjour, je souhaite signaler un problème"
+                                    },
+                                    "incident_id": {
+                                        "type": "integer",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Conversation démarrée"
+                    },
+                    "404": {
+                        "description": "Responsable municipal non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/conversations/{id}": {
+            "get": {
+                "tags": [
+                    "Messaging"
+                ],
+                "summary": "Voir une conversation avec ses messages",
+                "operationId": "ddbe0a94327643b2ce46ae01a43da3ec",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Conversation avec messages"
+                    },
+                    "403": {
+                        "description": "Non autorisé"
+                    },
+                    "404": {
+                        "description": "Conversation non trouvée"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/conversations/{id}/messages": {
+            "post": {
+                "tags": [
+                    "Messaging"
+                ],
+                "summary": "Envoyer un message",
+                "operationId": "1804c269b4621f20db484a821f90d575",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "content"
+                                ],
+                                "properties": {
+                                    "content": {
+                                        "type": "string",
+                                        "example": "Merci pour votre retour"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Message envoyé"
+                    },
+                    "400": {
+                        "description": "Conversation fermée"
+                    },
+                    "403": {
+                        "description": "Non autorisé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/conversations/{id}/close": {
+            "patch": {
+                "tags": [
+                    "Messaging"
+                ],
+                "summary": "Fermer une conversation (Admin municipal)",
+                "operationId": "630b1687055cc27e3b0fa6ff14eeae31",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Conversation fermée"
+                    },
+                    "403": {
+                        "description": "Non autorisé"
+                    },
+                    "404": {
+                        "description": "Conversation non trouvée"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/messages/{id}": {
+            "delete": {
+                "tags": [
+                    "Messaging"
+                ],
+                "summary": "Supprimer un message",
+                "operationId": "b48b82c8aad44f54e8eb7cbc2d7f298f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Message supprimé"
+                    },
+                    "403": {
+                        "description": "Non autorisé"
+                    },
+                    "404": {
+                        "description": "Message non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/municipalities": {
+            "get": {
+                "tags": [
+                    "Municipalities"
+                ],
+                "summary": "Lister toutes les municipalités",
+                "description": "Lister toutes les municipalités",
+                "operationId": "d48d7972fa90de9188e0e9b76cd03426",
+                "responses": {
+                    "200": {
+                        "description": "Liste des municipalités"
+                    }
+                }
+            }
+        },
+        "/municipalities/{municipality}": {
+            "get": {
+                "tags": [
+                    "Municipalities"
+                ],
+                "summary": "Voir une municipalité spécifique",
+                "description": "Afficher une municipalité spécifique",
+                "operationId": "e0a4cb7edd125343c36aef7cc22b5102",
+                "parameters": [
+                    {
+                        "name": "municipality",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Détails de la municipalité"
+                    },
+                    "404": {
+                        "description": "Municipalité non trouvée"
+                    }
+                }
+            }
+        },
+        "/admin_manager/my-municipality": {
+            "get": {
+                "tags": [
+                    "Municipalities"
+                ],
+                "summary": "Récupérer ma municipalité",
+                "description": "Récupérer ma municipalité (admin municipal ou agent)",
+                "operationId": "9f7f27ba3ce506ecce6055a62f0ac91e",
+                "responses": {
+                    "200": {
+                        "description": "Ma municipalité"
+                    },
+                    "404": {
+                        "description": "Municipalité non trouvée"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/admin/municipalities": {
+            "post": {
+                "tags": [
+                    "Municipalities"
+                ],
+                "summary": "Créer une municipalité",
+                "description": "Créer une municipalité (super admin)",
+                "operationId": "05e1e6daf33aef852c390cf8b90c86b0",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "governorate",
+                                    "address",
+                                    "city"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Municipalité de Monastir"
+                                    },
+                                    "governorate": {
+                                        "type": "string",
+                                        "example": "Monastir"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "522123456",
+                                        "nullable": true
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Rue principale",
+                                        "nullable": true
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "monastir@example.com",
+                                        "nullable": true
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "Monastir",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Municipalité créée"
+                    },
+                    "422": {
+                        "description": "Erreur de validation"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/admin/municipalities/{municipality}": {
+            "put": {
+                "tags": [
+                    "Municipalities"
+                ],
+                "summary": "Mettre à jour une municipalité",
+                "description": "Mettre à jour une municipalité (super admin)",
+                "operationId": "bf078f0bdf9d612b0054f41ffe2357c7",
+                "parameters": [
+                    {
+                        "name": "municipality",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Municipalité mise à jour"
+                    },
+                    "422": {
+                        "description": "Erreur de validation"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Municipalities"
+                ],
+                "summary": "Supprimer une municipalité",
+                "description": "Supprimer une municipalité (super admin)",
+                "operationId": "c8fc6a601ec761a5b3764be01103445e",
+                "parameters": [
+                    {
+                        "name": "municipality",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Municipalité supprimée"
+                    },
+                    "404": {
+                        "description": "Municipalité non trouvée"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/admin_manager/municipalities/my-municipality": {
+            "put": {
+                "tags": [
+                    "Municipalities"
+                ],
+                "summary": "Mettre à jour ma municipalité (Admin Manager)",
+                "description": "Mettre à jour ma municipalité (admin municipal)",
+                "operationId": "d88103c18963c6d97662fbc1b78d4777",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Municipalité mise à jour"
+                    },
+                    "403": {
+                        "description": "Admin municipal non trouvé"
+                    },
+                    "422": {
+                        "description": "Erreur de validation"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/notifications": {
+            "get": {
+                "tags": [
+                    "Notifications"
+                ],
+                "summary": "Toutes mes notifications",
+                "operationId": "0f031f66cd8c52bf73e89fb2d050ad83",
+                "responses": {
+                    "200": {
+                        "description": "Liste des notifications"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Notifications"
+                ],
+                "summary": "Supprimer toutes mes notifications",
+                "operationId": "ce884d5ad97e4c8c92fd3f415544073a",
+                "responses": {
+                    "200": {
+                        "description": "Toutes les notifications supprimées"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/notifications/unread": {
+            "get": {
+                "tags": [
+                    "Notifications"
+                ],
+                "summary": "Mes notifications non lues",
+                "operationId": "217f8101f2f40586e655f0fd48448959",
+                "responses": {
+                    "200": {
+                        "description": "Notifications non lues"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/notifications/{id}/read": {
+            "patch": {
+                "tags": [
+                    "Notifications"
+                ],
+                "summary": "Marquer une notification comme lue",
+                "operationId": "6771a07652ff5daf8e33e4059d5900c2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Notification marquée comme lue"
+                    },
+                    "403": {
+                        "description": "Non autorisé"
+                    },
+                    "404": {
+                        "description": "Notification non trouvée"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/notifications/read-all": {
+            "patch": {
+                "tags": [
+                    "Notifications"
+                ],
+                "summary": "Marquer toutes les notifications comme lues",
+                "operationId": "113fb54629d92beb67b1a138dfa5a229",
+                "responses": {
+                    "200": {
+                        "description": "Toutes les notifications marquées comme lues"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/notifications/{id}": {
+            "delete": {
+                "tags": [
+                    "Notifications"
+                ],
+                "summary": "Supprimer une notification",
+                "operationId": "ccdcc730b2088097dd94128f24960dbf",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Notification supprimée"
+                    },
+                    "403": {
+                        "description": "Non autorisé"
+                    },
+                    "404": {
+                        "description": "Notification non trouvée"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/subcategories": {
+            "get": {
+                "tags": [
+                    "Subcategories"
+                ],
+                "summary": "Lister toutes les sous-catégories",
+                "description": "Lister toutes les sous-catégories",
+                "operationId": "878a059138d6d65a245c7161d9eba648",
+                "responses": {
+                    "200": {
+                        "description": "Liste des sous-catégories"
+                    }
+                }
+            }
+        },
+        "/categories/{category_id}/subcategories": {
+            "get": {
+                "tags": [
+                    "Subcategories"
+                ],
+                "summary": "Lister les sous-catégories d'une catégorie",
+                "description": "Lister les sous-catégories d'une catégorie",
+                "operationId": "0f712973f05fdb142f65948789f0a527",
+                "parameters": [
+                    {
+                        "name": "category_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Liste des sous-catégories de la catégorie"
+                    }
+                }
+            }
+        },
+        "/subcategories/{subcategory}": {
+            "get": {
+                "tags": [
+                    "Subcategories"
+                ],
+                "summary": "Voir une sous-catégorie spécifique",
+                "description": "Afficher une sous-catégorie",
+                "operationId": "026d43b2d9c73d15f0bc0b59331e894d",
+                "parameters": [
+                    {
+                        "name": "subcategory",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Détails de la sous-catégorie"
+                    },
+                    "404": {
+                        "description": "Sous-catégorie non trouvée"
+                    }
+                }
+            }
+        },
+        "/admin/subcategories": {
+            "post": {
+                "tags": [
+                    "Subcategories"
+                ],
+                "summary": "Créer une sous-catégorie",
+                "description": "Créer une sous-catégorie (super admin)",
+                "operationId": "2ebadd3346a32f3de35ea452cbaac3f3",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "category_id",
+                                    "name"
+                                ],
+                                "properties": {
+                                    "category_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Nids de poule"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "color": {
+                                        "type": "string",
+                                        "example": "#FF5733",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Sous-catégorie créée avec succès"
+                    },
+                    "422": {
+                        "description": "Erreur de validation"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/admin/subcategories/{subcategory}": {
+            "put": {
+                "tags": [
+                    "Subcategories"
+                ],
+                "summary": "Mettre à jour une sous-catégorie",
+                "description": "Mettre à jour une sous-catégorie (super admin)",
+                "operationId": "1cb27cfba67291ae4622625a0233a9fe",
+                "parameters": [
+                    {
+                        "name": "subcategory",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "category_id": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "color": {
+                                        "type": "string",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sous-catégorie mise à jour avec succès"
+                    },
+                    "422": {
+                        "description": "Erreur de validation"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Subcategories"
+                ],
+                "summary": "Supprimer une sous-catégorie",
+                "description": "Supprimer une sous-catégorie (super admin)",
+                "operationId": "44177c372de5677d39635191c66cfc73",
+                "parameters": [
+                    {
+                        "name": "subcategory",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sous-catégorie supprimée avec succès"
+                    },
+                    "404": {
+                        "description": "Sous-catégorie non trouvée"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/admin/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Lister tous les utilisateurs",
+                "description": "Lister tous les utilisateurs (super admin)",
+                "operationId": "b2c82e7c972ca4c5910b82f3c498d9ea",
+                "responses": {
+                    "200": {
+                        "description": "Liste des utilisateurs"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Créer un utilisateur",
+                "description": "Créer un utilisateur (super admin)",
+                "operationId": "024e0e9203cd7c7d366cd21586f7daea",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "phoneNumber",
+                                    "city",
+                                    "password",
+                                    "cin",
+                                    "municipality",
+                                    "role"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "responsable A"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "resp1@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "example": "administarteur de la municipalité"
+                                    },
+                                    "municipality": {
+                                        "type": "string",
+                                        "example": "Municipalité de Monastir"
+                                    },
+                                    "phoneNumber": {
+                                        "type": "string",
+                                        "example": "9995997"
+                                    },
+                                    "cin": {
+                                        "type": "string",
+                                        "example": "12558122"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "123 Rue de Monastir"
+                                    },
+                                    "service": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Utilisateur créé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/admin_manager/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Lister les utilisateurs de ma municipalité",
+                "description": "Lister les utilisateurs de ma municipalité (admin municipal)",
+                "operationId": "f1df8ad74e1f8d384f343e3decdbbc0f",
+                "responses": {
+                    "200": {
+                        "description": "Liste des utilisateurs de la municipalité"
+                    },
+                    "404": {
+                        "description": "Municipalité non trouvée"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Créer un employé dans ma municipalité",
+                "description": "Créer un employé dans ma municipalité (admin municipal)",
+                "operationId": "3c0096e6c2787dac1a80e88bd0977e71",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "role"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "agent A"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "agentA@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    },
+                                    "phoneNumber": {
+                                        "type": "string",
+                                        "example": "98458988"
+                                    },
+                                    "cin": {
+                                        "type": "string",
+                                        "example": "12578122"
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "example": "agent",
+                                        "enum": [
+                                            "agent"
+                                        ]
+                                    },
+                                    "service": {
+                                        "type": "string",
+                                        "example": "Voirie et Travaux"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Employé créé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/admin/users/{user}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Afficher un utilisateur",
+                "description": "Afficher un utilisateur",
+                "operationId": "1a52bbf9c5510150326876c40666616b",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Utilisateur affiché"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Mettre à jour un utilisateur",
+                "description": "Mettre à jour un utilisateur (admin)",
+                "operationId": "4479d108ceb127a4e74fd4eedb5431f3",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Utilisateur mis à jour"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Supprimer un utilisateur",
+                "description": "Supprimer un utilisateur (admin)",
+                "operationId": "762a6bd24d896af047c64db2b1182c31",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Utilisateur supprimé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/admin/users/{user}/status": {
+            "patch": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Mettre à jour le statut d'un utilisateur",
+                "description": "Mettre à jour le statut d'un utilisateur",
+                "operationId": "970153b0c1fc6878e0811af99bc52ad6",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "active",
+                                            "inactive",
+                                            "suspended"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Statut mis à jour"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/zones": {
+            "get": {
+                "tags": [
+                    "Zones"
+                ],
+                "summary": "Lister tous les zones",
+                "description": "Lister toutes les zones",
+                "operationId": "c7bcbad1f7a7a16d0d2aeb2352d5db08",
+                "responses": {
+                    "200": {
+                        "description": "Liste de tous les zones"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/admin_manager/zones/nearby": {
+            "get": {
+                "tags": [
+                    "Zones"
+                ],
+                "summary": "Lister les zones de ma municipalité",
+                "description": "Lister les zones de la municipalité de l'admin connecté",
+                "operationId": "3d2d91ccbdeaaaf43023d4d0424f703e",
+                "responses": {
+                    "200": {
+                        "description": "Liste des zones de ma municipalité"
+                    },
+                    "404": {
+                        "description": "Admin municipal non trouvé"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/zones/{zone}": {
+            "get": {
+                "tags": [
+                    "Zones"
+                ],
+                "summary": "Voir une zone spécifique",
+                "description": "Afficher une zone spécifique",
+                "operationId": "cb4285a9029a20c76945c5bbb9a16850",
+                "parameters": [
+                    {
+                        "name": "zone",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Détails de la zone"
+                    },
+                    "404": {
+                        "description": "Zone non trouvée"
+                    }
+                }
+            }
+        },
+        "/admin_manager/zones": {
+            "post": {
+                "tags": [
+                    "Zones"
+                ],
+                "summary": "Créer une zone (super admin)",
+                "description": "Créer une zone (super admin)",
+                "operationId": "46d340b943fbbeca8cd67243bf47a789",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "latitude_center",
+                                    "longitude_center",
+                                    "rayon_km",
+                                    "city"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Zone Nord"
+                                    },
+                                    "latitude_center": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 35.7725
+                                    },
+                                    "longitude_center": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 10.755
+                                    },
+                                    "rayon_km": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 2.5
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Zone créée avec succès"
+                    },
+                    "404": {
+                        "description": "Municipalité non trouvée"
+                    },
+                    "409": {
+                        "description": "Zone déjà existante"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/admin/zones/{id}": {
+            "put": {
+                "tags": [
+                    "Zones"
+                ],
+                "summary": "Mettre à jour une zone (Super admin)",
+                "description": "Mettre à jour une zone (super admin)",
+                "operationId": "ae79c7241d17a83065281e129f068e90",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Zone mise à jour"
+                    },
+                    "404": {
+                        "description": "Zone non trouvée"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/admin/zones/{zone}": {
+            "delete": {
+                "tags": [
+                    "Zones"
+                ],
+                "summary": "Supprimer une zone",
+                "description": "Supprimer une zone (super admin)",
+                "operationId": "cfcd91a92ec8f34de3a3a945febbfed1",
+                "parameters": [
+                    {
+                        "name": "zone",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Zone supprimée"
+                    },
+                    "404": {
+                        "description": "Zone non trouvée"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "description": "Entrez votre token Sanctum (format : Bearer <token>)"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Assignments",
+            "description": "Gestion des affectations d'incidents aux agents"
+        },
+        {
+            "name": "Auth",
+            "description": "Authentification des utilisateurs"
+        },
+        {
+            "name": "Categories",
+            "description": "Gestion des catégories (services) d'incidents"
+        },
+        {
+            "name": "Comments",
+            "description": "Gestion des commentaires sur les incidents"
+        },
+        {
+            "name": "Incidents",
+            "description": "Gestion des incidents signalés par les citoyens"
+        },
+        {
+            "name": "Media",
+            "description": "Gestion des médias (photos de profil, incidents, etc.)"
+        },
+        {
+            "name": "Messaging",
+            "description": "Messagerie entre citoyens et responsables municipaux"
+        },
+        {
+            "name": "Municipalities",
+            "description": "Gestion des municipalités"
+        },
+        {
+            "name": "Notifications",
+            "description": "Gestion des notifications utilisateur"
+        },
+        {
+            "name": "Subcategories",
+            "description": "Gestion des sous-catégories d'incidents"
+        },
+        {
+            "name": "Users",
+            "description": "Gestion des utilisateurs"
+        },
+        {
+            "name": "Zones",
+            "description": "Gestion des zones par les super admins"
+        }
+    ]
+}

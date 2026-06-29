@@ -1,0 +1,109 @@
+id,name,latitude_center,longitude_center,rayon_km,municipality_id,municipality_name,number_of_inhabitants,surface
+1,Monastir-Centre,35.76430000,10.81130000,1.50,1,"Municipalité de Monastir",110084,108
+2,Monastir-Nord,35.77800000,10.80000000,2.00,1,"Municipalité de Monastir",110084,108
+3,Monastir-Sud,35.75000000,10.82000000,2.00,1,"Municipalité de Monastir",110084,108
+4,Monastir-Est,35.76430000,10.83500000,1.80,1,"Municipalité de Monastir",110084,108
+5,Monastir-Ouest,35.76430000,10.79000000,1.80,1,"Municipalité de Monastir",110084,108
+6,Jemmal-Centre,35.62210000,10.76100000,1.50,2,"Municipalité de Jemmal",71158,68
+7,Jemmal-Nord,35.63800000,10.76000000,2.00,2,"Municipalité de Jemmal",71158,68
+8,Jemmal-Sud,35.60600000,10.76200000,2.00,2,"Municipalité de Jemmal",71158,68
+9,Jemmal-Ouest,35.62210000,10.74000000,2.00,2,"Municipalité de Jemmal",71158,68
+10,Moknine-Centre,35.64220000,10.90150000,1.50,3,"Municipalité de Moknine",97655,103
+11,Moknine-Nord,35.65800000,10.90000000,2.00,3,"Municipalité de Moknine",97655,103
+12,Moknine-Sud,35.62600000,10.90300000,2.00,3,"Municipalité de Moknine",97655,103
+13,Moknine-Est,35.64220000,10.92000000,2.00,3,"Municipalité de Moknine",97655,103
+14,Moknine-Ouest,35.64220000,10.88200000,2.00,3,"Municipalité de Moknine",97655,103
+15,"Ksar Hellal-Centre",35.64740000,10.89060000,1.50,4,"Municipalité de Ksar Hellal",55505,32
+16,"Ksar Hellal-Nord",35.66300000,10.88800000,1.80,4,"Municipalité de Ksar Hellal",55505,32
+17,"Ksar Hellal-Sud",35.63100000,10.89300000,1.80,4,"Municipalité de Ksar Hellal",55505,32
+18,"Ksar Hellal-Ouest",35.64740000,10.87000000,1.80,4,"Municipalité de Ksar Hellal",55505,32
+19,"Ksibet el-Médiouni-Centre",35.69000000,10.78000000,1.50,5,"Municipalité de Ksibet el-Médiouni",41075,38
+20,"Ksibet el-Médiouni-Nord",35.70500000,10.77800000,1.80,5,"Municipalité de Ksibet el-Médiouni",41075,38
+21,"Ksibet el-Médiouni-Sud",35.67500000,10.78200000,1.80,5,"Municipalité de Ksibet el-Médiouni",41075,38
+22,"Ksibet el-Médiouni-Est",35.69000000,10.79500000,1.50,5,"Municipalité de Ksibet el-Médiouni",41075,38
+23,Bembla-Centre,35.72000000,10.76000000,1.50,6,"Municipalité de Bembla",36076,34
+24,Bembla-Nord,35.73500000,10.75800000,1.80,6,"Municipalité de Bembla",36076,34
+25,Bembla-Sud,35.70500000,10.76200000,1.80,6,"Municipalité de Bembla",36076,34
+26,Téboulba-Centre,35.64310000,10.97640000,1.50,7,"Municipalité de Téboulba",41049,22
+27,Téboulba-Nord,35.65800000,10.97500000,1.80,7,"Municipalité de Téboulba",41049,22
+28,Téboulba-Est,35.64310000,10.99500000,1.50,7,"Municipalité de Téboulba",41049,22
+29,Téboulba-Ouest,35.64310000,10.95800000,1.80,7,"Municipalité de Téboulba",41049,22
+30,Zéramdine-Centre,35.59670000,10.73190000,1.50,8,"Municipalité de Zéramdine",30732,150
+31,Zéramdine-Nord,35.61200000,10.73100000,2.00,8,"Municipalité de Zéramdine",30732,150
+32,Zéramdine-Sud,35.58100000,10.73300000,2.00,8,"Municipalité de Zéramdine",30732,150
+33,"Sayada-Lamta-Bou Hajar-Centre",35.66000000,10.74500000,1.50,9,"Municipalité de Sayada-Lamta-Bou Hajar",26939,27
+34,"Sayada-Lamta-Bou Hajar-Nord",35.67500000,10.74200000,1.80,9,"Municipalité de Sayada-Lamta-Bou Hajar",26939,27
+35,"Sayada-Lamta-Bou Hajar-Sud",35.64500000,10.74800000,1.80,9,"Municipalité de Sayada-Lamta-Bou Hajar",26939,27
+36,"Sayada-Lamta-Bou Hajar-Est",35.66000000,10.76000000,1.50,9,"Municipalité de Sayada-Lamta-Bou Hajar",26939,27
+37,Bekalta-Centre,35.61080000,11.00190000,2.00,10,"Municipalité de Bekalta",19091,176
+38,Bekalta-Nord,35.62600000,11.00100000,2.00,10,"Municipalité de Bekalta",19091,176
+39,Bekalta-Est,35.61080000,11.02000000,1.80,10,"Municipalité de Bekalta",19091,176
+40,Sahline-Centre,35.74830000,10.77670000,1.50,11,"Municipalité de Sahline",32485,42
+41,Sahline-Nord,35.76300000,10.77500000,1.80,11,"Municipalité de Sahline",32485,42
+42,Sahline-Sud,35.73300000,10.77900000,1.80,11,"Municipalité de Sahline",32485,42
+43,Ouerdanine-Centre,35.63670000,10.75500000,2.00,12,"Municipalité de Ouerdanine",22690,112
+44,Ouerdanine-Nord,35.65200000,10.75400000,2.00,12,"Municipalité de Ouerdanine",22690,112
+45,Ouerdanine-Sud,35.62100000,10.75600000,2.00,12,"Municipalité de Ouerdanine",22690,112
+46,"Beni Hassen-Centre",35.70500000,10.72000000,2.00,13,"Municipalité de Beni Hassen",15230,64
+47,"Beni Hassen-Nord",35.72000000,10.71900000,2.00,13,"Municipalité de Beni Hassen",15230,64
+48,"Beni Hassen-Sud",35.69000000,10.72100000,2.00,13,"Municipalité de Beni Hassen",15230,64
+49,"Sousse Médina-Centre",35.82580000,10.63670000,0.80,14,"Municipalité de Sousse Médina",32220,8
+50,"Sousse Médina-Nord",35.83100000,10.63600000,0.80,14,"Municipalité de Sousse Médina",32220,8
+51,"Sousse Médina-Est",35.82580000,10.64500000,0.80,14,"Municipalité de Sousse Médina",32220,8
+52,"Sousse Riadh-Centre",35.84000000,10.62000000,1.50,15,"Municipalité de Sousse Riadh",71464,12
+53,"Sousse Riadh-Nord",35.85500000,10.61800000,1.80,15,"Municipalité de Sousse Riadh",71464,12
+54,"Sousse Riadh-Ouest",35.84000000,10.60500000,1.50,15,"Municipalité de Sousse Riadh",71464,12
+55,"Sousse Riadh-Est",35.84000000,10.63500000,1.50,15,"Municipalité de Sousse Riadh",71464,12
+56,"Sousse Jawhara-Centre",35.82000000,10.61500000,1.50,16,"Municipalité de Sousse Jawhara",97535,15
+57,"Sousse Jawhara-Nord",35.83500000,10.61300000,1.80,16,"Municipalité de Sousse Jawhara",97535,15
+58,"Sousse Jawhara-Sud",35.80500000,10.61700000,1.80,16,"Municipalité de Sousse Jawhara",97535,15
+59,"Sousse Jawhara-Ouest",35.82000000,10.60000000,1.50,16,"Municipalité de Sousse Jawhara",97535,15
+60,"Sousse Sidi Abdelhamid-Centre",35.81500000,10.65000000,1.50,17,"Municipalité de Sousse Sidi Abdelhamid",57691,10
+61,"Sousse Sidi Abdelhamid-Nord",35.82800000,10.64900000,1.50,17,"Municipalité de Sousse Sidi Abdelhamid",57691,10
+62,"Sousse Sidi Abdelhamid-Sud",35.80200000,10.65100000,1.80,17,"Municipalité de Sousse Sidi Abdelhamid",57691,10
+63,"Sousse Sidi Abdelhamid-Est",35.81500000,10.66500000,1.50,17,"Municipalité de Sousse Sidi Abdelhamid",57691,10
+64,"Hammam Sousse-Centre",35.86140000,10.59860000,1.50,18,"Municipalité de Hammam Sousse",48899,13
+65,"Hammam Sousse-Nord",35.87600000,10.59700000,1.80,18,"Municipalité de Hammam Sousse",48899,13
+66,"Hammam Sousse-Sud",35.84600000,10.60000000,1.80,18,"Municipalité de Hammam Sousse",48899,13
+67,"Hammam Sousse-Est",35.86140000,10.61000000,1.20,18,"Municipalité de Hammam Sousse",48899,13
+68,Akouda-Centre,35.87830000,10.57330000,1.50,19,"Municipalité de Akouda",39174,16
+69,Akouda-Nord,35.89300000,10.57200000,1.80,19,"Municipalité de Akouda",39174,16
+70,Akouda-Est,35.87830000,10.58800000,1.50,19,"Municipalité de Akouda",39174,16
+71,Akouda-Ouest,35.87830000,10.55800000,1.80,19,"Municipalité de Akouda",39174,16
+72,"Kalâa Kebira-Centre",35.86500000,10.54000000,1.50,20,"Municipalité de Kalâa Kebira",67108,93
+73,"Kalâa Kebira-Nord",35.88000000,10.53800000,2.00,20,"Municipalité de Kalâa Kebira",67108,93
+74,"Kalâa Kebira-Sud",35.85000000,10.54200000,2.00,20,"Municipalité de Kalâa Kebira",67108,93
+75,"Kalâa Kebira-Ouest",35.86500000,10.52000000,2.00,20,"Municipalité de Kalâa Kebira",67108,93
+76,M'saken-Centre,35.73110000,10.57060000,1.50,21,"Municipalité de M'saken",97312,242
+77,M'saken-Nord,35.74700000,10.56900000,2.00,21,"Municipalité de M'saken",97312,242
+78,M'saken-Sud,35.71500000,10.57200000,2.00,21,"Municipalité de M'saken",97312,242
+79,M'saken-Est,35.73110000,10.59000000,2.00,21,"Municipalité de M'saken",97312,242
+80,M'saken-Ouest,35.73110000,10.55000000,2.00,21,"Municipalité de M'saken",97312,242
+81,"Kalâa Seghira-Centre",35.83860000,10.54940000,1.50,22,"Municipalité de Kalâa Seghira",45743,40
+82,"Kalâa Seghira-Nord",35.85300000,10.54800000,1.80,22,"Municipalité de Kalâa Seghira",45743,40
+83,"Kalâa Seghira-Sud",35.82400000,10.55100000,1.80,22,"Municipalité de Kalâa Seghira",45743,40
+84,"Kalâa Seghira-Ouest",35.83860000,10.53000000,1.80,22,"Municipalité de Kalâa Seghira",45743,40
+85,Enfida-Centre,36.14000000,10.37000000,2.00,23,"Municipalité de Enfida",58613,1093
+86,Enfida-Nord,36.15600000,10.36800000,2.50,23,"Municipalité de Enfida",58613,1093
+87,Enfida-Sud,36.12400000,10.37200000,2.50,23,"Municipalité de Enfida",58613,1093
+88,Enfida-Est,36.14000000,10.39000000,2.50,23,"Municipalité de Enfida",58613,1093
+89,Bouficha-Centre,36.21000000,10.52000000,2.00,24,"Municipalité de Bouficha",36094,473
+90,Bouficha-Nord,36.22600000,10.51800000,2.50,24,"Municipalité de Bouficha",36094,473
+91,Bouficha-Sud,36.19400000,10.52200000,2.50,24,"Municipalité de Bouficha",36094,473
+92,Bouficha-Est,36.21000000,10.54000000,2.00,24,"Municipalité de Bouficha",36094,473
+93,"Zaouiet Ksibet Thrayet-Centre",35.71000000,10.59500000,1.50,25,"Municipalité de Zaouiet Ksibet Thrayet",49130,35
+94,"Zaouiet Ksibet Thrayet-Nord",35.72500000,10.59300000,2.00,25,"Municipalité de Zaouiet Ksibet Thrayet",49130,35
+95,"Zaouiet Ksibet Thrayet-Sud",35.69500000,10.59700000,2.00,25,"Municipalité de Zaouiet Ksibet Thrayet",49130,35
+96,"Zaouiet Ksibet Thrayet-Est",35.71000000,10.61500000,2.00,25,"Municipalité de Zaouiet Ksibet Thrayet",49130,35
+97,"Sidi Bou Ali-Centre",36.06000000,10.48000000,2.00,26,"Municipalité de Sidi Bou Ali",20647,340
+98,"Sidi Bou Ali-Nord",36.07600000,10.47800000,2.50,26,"Municipalité de Sidi Bou Ali",20647,340
+99,"Sidi Bou Ali-Sud",36.04400000,10.48200000,2.50,26,"Municipalité de Sidi Bou Ali",20647,340
+100,Kondar-Centre,35.69500000,10.56000000,2.00,27,"Municipalité de Kondar",15491,85
+101,Kondar-Nord,35.71000000,10.55800000,2.00,27,"Municipalité de Kondar",15491,85
+102,Kondar-Ouest,35.69500000,10.54000000,2.00,27,"Municipalité de Kondar",15491,85
+103,"Sidi El Hani-Centre",35.79000000,10.37000000,2.50,28,"Municipalité de Sidi El Hani",14508,568
+104,"Sidi El Hani-Nord",35.80600000,10.36800000,3.00,28,"Municipalité de Sidi El Hani",14508,568
+105,"Sidi El Hani-Sud",35.77400000,10.37200000,3.00,28,"Municipalité de Sidi El Hani",14508,568
+106,Hergla-Centre,36.09000000,10.44500000,1.50,29,"Municipalité de Hergla",10652,42
+107,Hergla-Nord,36.10500000,10.44300000,2.00,29,"Municipalité de Hergla",10652,42
+108,Hergla-Est,36.09000000,10.46000000,1.50,29,"Municipalité de Hergla",10652,42
