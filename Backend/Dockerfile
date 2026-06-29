@@ -14,9 +14,9 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Dossier de travail
 WORKDIR /var/www
+COPY Backend/ .
 
 # Copier le projet
-COPY . .
 
 # Installer les dépendances PHP
 RUN composer install --no-dev --optimize-autoloader --no-interaction
