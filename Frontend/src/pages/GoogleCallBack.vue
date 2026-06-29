@@ -28,7 +28,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter }      from 'vue-router'
-import { useAuthStore }   from '../stores/AuthStore'
+import { useAuthStore }   from '../stores/AuthStore.js'
 import { getMe }          from '../api/AuthApi.js'
 
 const router    = useRouter()
