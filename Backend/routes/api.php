@@ -30,7 +30,7 @@ use App\Http\Controllers\StatisticsController;
 // =============================================
 // Broadcast::routes(['middleware' => [\App\Http\Middleware\AuthMiddleware::class]]);
 // Route::post('/fcm-token', [NotificationController::class, 'updateFcmToken']);
-
+Route::get('/health', fn() => response()->json(['status' => 'ok']));
 // Authentification
 Route::post('auth/register', [AuthController::class, 'register']);
 

@@ -37,6 +37,7 @@ php artisan storage:link --force --no-ansi 2>/dev/null || true
 
 # Migrations
 php artisan migrate --force --no-ansi
-
+# Migrations
+php artisan migrate --force --no-ansi
 # Démarrer supervisor
 exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
