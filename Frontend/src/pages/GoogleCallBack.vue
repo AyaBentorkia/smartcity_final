@@ -11,7 +11,7 @@
       <div v-else-if="status === 'error'" class="flex flex-col items-center gap-4">
         <div class="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center">
           <span class="text-3xl">❌</span>
-        </div>
+        </div> 
         <p class="text-[#CC1525] font-semibold">Échec de la connexion Google</p>
         <p class="text-gray-400 text-sm">{{ errorMessage }}</p>
         <button
