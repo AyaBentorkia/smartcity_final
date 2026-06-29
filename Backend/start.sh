@@ -2,10 +2,13 @@
 
 cd /var/www
 
-# Générer la clé si manquante
+# Créer .env depuis les variables d'environnement
+cp .env.example .env
+
+# Générer la clé
 php artisan key:generate --force
 
-# Cache config
+# Cache
 php artisan config:cache
 php artisan route:cache
 
