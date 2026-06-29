@@ -35,16 +35,20 @@ php artisan storage:link --force --no-ansi 2>/dev/null || true
 # Migrations
 php artisan migrate --force --no-ansi
 
-# Lancer les seeders EN ARRIÈRE-PLAN après démarrage supervisord
-# firstOrCreate évite les doublons — safe à relancer
+# Lancer les seeders EN ARRIÈRE-PLAN avec logs visibles
 (
-    sleep 15  # Attendre que supervisord + php-fpm soient prêts
+    sleep 15
     cd /var/www
-    php artisan db:seed --class=UserSeeder --force --no-ansi
-    php artisan db:seed --class=ZoneSeeder --force --no-ansi
-    php artisan db:seed --class=IncidentSeeder --force --no-ansi
-    php artisan db:seed --class=AssignmentSeeder --force --no-ansi
-) &
+    echo "=== START SEEDING ===" >&2
+    php artisan db:seed --class=UserSeeder --force --no-ansi >&2 2>&1 && echo "=== UserSeeder DONE ===" >&2
+    php artisan db:seed --class=ZoneSeeder --force --no-ansi >&2 2>&1 && echo "=== ZoneSeeder DONE ===" >&2
+    php artisan db:seed --class=IncidentSeeder --force --no-ansi >&2 2>&1 && echo "=== IncidentSeeder DONE ===" >&2
+    php artisan db:seed --class=AssignmentSeeder --force --no-ansi >&2 2>&1 && echo "=== AssignmentSeeder DONE ===" >&2
+    echo "=== ALL SEEDERS DONE ===" >&2
+) >> /tmp/seed.log 2>&1 &
 
-# Démarrer supervisor (au premier plan — ouvre le port immédiatement)
+# Afficher les logs du seeder en temps réel dans Render
+tail -f /tmp/seed.log &
+
+# Démarrer supervisor
 exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
